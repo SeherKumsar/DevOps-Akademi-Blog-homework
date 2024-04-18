@@ -1,0 +1,26 @@
+services:
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+  db:
+    image: mysql:8.0
+    container_name: mysql_db_new_no
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=app #schema name
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+    ports:
+      - "3308:3306"
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - my_network
+
+volumes:
+  db_data:
+
+networks:
+  my_network:
